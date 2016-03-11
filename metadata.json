@@ -1,0 +1,14 @@
+{
+  "name": "jesusrj-sonarqube",
+  "version": "0.1.0",
+  "author": "JesusRJ",
+  "summary": "SonarQube installation and configuration",
+  "license": "Apache 2.0",
+  "source": "https://github.com/JesusRJ/jesusrj-sonarqube",
+  "project_page": "https://github.com/JesusRJ/jesusrj-sonarqube",
+  "issues_url": "https://github.com/JesusRJ/jesusrj-sonarqube/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
