@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # sonarqube
 
 #### Table of Contents
@@ -77,3 +78,7 @@ know what the ground rules for contributing are.
 If you aren't using changelog, put your release notes here (though you should
 consider using changelog). You may also add any additional sections you feel are
 necessary or important to include here. Please use the `## ` header.
+=======
+# jesusrj-sonarqube
+SonarQube installation and configuration
+>>>>>>> 1af20669100f0ce1f677303b31a69e4a4d27d78c
