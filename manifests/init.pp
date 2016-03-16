@@ -1,6 +1,6 @@
 # == Class: sonarqube
 #
-# Full description of class sonarqube here.
+# Sonarqube installation and configuration
 #
 # === Parameters
 #
@@ -24,18 +24,65 @@
 # === Examples
 #
 #  class { 'sonarqube':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
 #  }
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Author Name <reginaldo.jesus@gmail.com>
 #
 # === Copyright
 #
-# Copyright 2016 Your name here, unless otherwise noted.
+# Copyright 2016 Reginaldo Jesus (JesusRJ).
 #
-class sonarqube {
+class sonarqube (
+  $version            = $sonarqube::params::version,
+  $service_enable     = $sonarqube::params::service_enable,
+  $service_ensure     = $sonarqube::params::service_ensure,
+  $service_provider   = $sonarqube::params::service_provider,
+  $package_provider   = $sonarqube::params::package_provider,
+  $install_java       = $sonarqube::params::install_java,
+  $configure_firewall = false,
+  $config_properties  = {},
+  $config_file        = undef,
+) inherits sonarqube::params {
 
+  include sonarqube::repo
+
+  validate_string($version)
+  validate_bool($service_enable)
+  validate_re($service_ensure, '^running$|^stopped$')
+  validate_string($service_provider)
+  validate_string($package_provider)
+  validate_bool($install_java)
+  validate_bool($configure_firewall)
+  validate_hash($config_properties)
+  validate_string($config_file)
+
+  if $install_java {
+    class {'java':
+      distribution => 'jdk',
+    }
+  }
+
+  package { 'sonar':
+    ensure  => $::sonarqube::version,
+    require => Class['sonarqube::repo'],
+    notify  => Service['sonar'],
+  }
+
+  class { 'sonarqube::config':
+    require => Package['sonar'],
+    notify  => Service['sonar'],
+  }
+
+  include sonarqube::service
+
+  if defined('::firewall') {
+    if $configure_firewall == undef {
+      fail('The firewall module is included in your manifests, please configure $configure_firewall in the sonarqube module')
+    } elsif $configure_firewall {
+      include sonarqube::firewall
+    }
+  }
 
 }

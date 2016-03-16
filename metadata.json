@@ -8,7 +8,34 @@
   "project_page": "https://github.com/JesusRJ/jesusrj-sonarqube",
   "issues_url": "https://github.com/JesusRJ/jesusrj-sonarqube/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs-apt","version_requirement":">= 2.2.2"},
+    { "name": "puppetlabs-java", "version_requirement": ">= 1.0.1 < 2.0.0" },
+    { "name": "puppet-archive", "version_requirement": ">= 0.4.8" }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7.0"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7.0"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "10.04",
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "tags": [
+    "sonarqube"
   ]
 }
-
