@@ -58,6 +58,10 @@ class sonarqube (
   validate_hash($config_properties)
   validate_string($config_file)
 
+  $sonar_home = '/opt/sonar'
+  $plugin_home = "${sonar_home}/extensions/plugins/"
+  $sonar_properties = "${sonar_home}/conf/sonar.properties"
+
   if $install_java {
     class {'java':
       distribution => 'jdk',

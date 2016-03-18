@@ -8,15 +8,13 @@ class sonarqube::config {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  $sonar_properties = '/opt/sonar/conf/sonar.properties'
-
   # Sonar configuration file
   # Config file content will be replaced by config_properties
   # parameter values
   if $::sonarqube::config_file != undef {
-    file { $sonar_properties:
+    file { $sonarqube::sonar_properties:
       ensure  => file,
-      content => $::sonarqube::config_file,
+      content => $sonarqube::config_file,
       owner   => 'sonar',
       group   => 'sonar',
       mode    => '0644',
@@ -27,10 +25,18 @@ class sonarqube::config {
   }
 
   # Sonar configuration properties
-  if empty($::sonarqube::config_properties) {
+  if empty($sonarqube::config_properties) {
     notice('Config properties not provided.')
   } else {
-    create_resources( 'sonarqube::propertie', $::sonarqube::config_properties )
+    create_resources( 'sonarqube::propertie', $sonarqube::config_properties )
+  }
+
+  # Ensure $sonarqube::plugin_home exist with proper permissions
+  file { $sonarqube::plugin_home:
+    ensure => directory,
+    owner  => 'sonar',
+    group  => 'sonar',
+    mode   => '0755',
   }
 
 }
